@@ -7,3 +7,4 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ## [Unreleased]
 
 - Database - MySQL Docker example added (Mono database example and Multi database example)
+- Taskfile - Added [Taskfile](https://taskfile.dev/) to the project
