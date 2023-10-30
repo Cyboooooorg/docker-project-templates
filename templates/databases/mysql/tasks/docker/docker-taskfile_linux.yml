@@ -1,0 +1,53 @@
+version: "3"
+
+tasks:
+  build:
+    desc: Build services described in the stack
+    aliases: [b]
+    preconditions:
+      - sh: test -f ../.env
+        msg: "File .env not found"
+      - sh: test -f ../docker-compose.yml
+        msg: "File docker-compose.yml not found"
+    cmds:
+      - docker compose build
+    silent: true
+
+  up:
+    desc: Create (build if images does not exists) and start containers described in the stack
+    aliases: [u, start]
+    preconditions:
+      - sh: test -f ../.env
+        msg: "File .env not found"
+      - sh: test -f ../docker-compose.yml
+        msg: "File docker-compose.yml not found"
+    cmds:
+      - docker compose up -d --remove-orphans
+    silent: true
+
+  down:
+    desc: Stop and remove containers and networks described in the stack
+    aliases: [d, stop]
+    preconditions:
+      - sh: test -f ../.env
+        msg: "File .env not found"
+      - sh: test -f ../docker-compose.yml
+        msg: "File docker-compose.yml not found"
+    cmds:
+      - docker compose down
+    silent: true
+
+  logs:
+    desc: Show logs for services
+    aliases: [l]
+    preconditions:
+      - sh: test -f ../.env
+        msg: "File .env not found"
+      - sh: test -f ../docker-compose.yml
+        msg: "File docker-compose.yml not found"
+    cmds:
+      - cmd: gnome-terminal --title="{{ .ITEM }}" -- sh -c "bash -c \"docker logs -f {{ .ITEM }};\""
+        for:
+          var: CONTAINER_NAMES
+          split: ","
+    silent: true

@@ -53,6 +53,30 @@ This repository provides templates for many languages and tools. However, it is 
 
 To use these templates, you must first clone this repository. Then, you must copy the template you want to use to the root of your project. Finally, you must adapt the template to your project.
 
+Install [Task](https://taskfile.dev/installation/) and run the following command to see the available tasks:
+
+```bash
+task
+```
+
+Or go in any template folder and run the following command to see the available tasks:
+
+```bash
+task
+```
+
+If this the first time you use the template, you must run the following command to initialize the template:
+
+```bash
+task init
+```
+
+Then, you can run the following command to start the project:
+
+```bash
+task docker:build docker:up
+```
+
 ### How to Contribute
 
 If you want to contribute to this repository, you can do so by creating a pull request. However, before creating a pull request, please make sure that your contribution is relevant and that it does not break anything.

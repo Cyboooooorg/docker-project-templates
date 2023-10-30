@@ -1,0 +1,23 @@
+version: "3"
+
+includes:
+  docker:
+    taskfile: ./tasks/docker/docker-taskfile_{{OS}}.yml
+    aliases: [d]
+    vars:
+      CONTAINER_NAMES: "dpt-mysql-multi,dpt-mysql-multi"
+
+tasks:
+  default:
+    desc: Show this help message
+    cmds:
+      - task --list-all
+    silent: true
+
+  init:
+    desc: Create the env files if they don't exist
+    cmds:
+      - cp -n .env.example .env
+      - cp -n ./build/mono-database/env/.env.example ./build/mono-database/env/.env
+      - cp -n ./build/multi-databases/env/.env.example ./build/multi-databases/env/.env
+    silent: true
