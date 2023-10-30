@@ -1,4 +1,4 @@
-![DPT Logo](./assets/pictures/dpt-logo.png)
+[![DPT Logo](./assets/pictures/dpt-logo.png)](https://github.com/Cyboooooorg/docker-project-templates)
 
 # Docker Project Templates
 
