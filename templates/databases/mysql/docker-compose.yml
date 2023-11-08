@@ -1,0 +1,125 @@
+version: '3.7'
+
+networks:
+  # ---------------------------------------------------------------------------------------------------- #
+  # Default network
+  # This network is created automatically by Docker.
+  # It is used by the service containers to communicate with each other.
+  # (It is defined here for documentation purposes only. See the Docker documentation for more details.)
+  # ---------------------------------------------------------------------------------------------------- #
+  default:
+    driver: bridge
+
+volumes:
+  # ---------------------------------------------------------------------------------------------------- #
+  # Database (Mono) 'virtual' data volume
+  # This volume is used by the database service container to store its data, it allows the database to be
+  # persisted between container restarts.
+  # This volume is 'virtual', it is created in Docker but it is not stored on the host machine.
+  # ---------------------------------------------------------------------------------------------------- #
+  db-data-mono-virtual:
+    driver: local
+
+  # ---------------------------------------------------------------------------------------------------- #
+  # Database (Mono) 'physical' data volume
+  # This volume is used by the database service container to store its data, it allows the database to be
+  # persisted between container restarts.
+  # This volume is 'physical', it is created in Docker and it is stored on the host machine. That means that
+  # the data is persisted even if Docker is stopped or removed (same for the volume).
+  # ---------------------------------------------------------------------------------------------------- #
+  db-data-mono-physical:
+    driver: local
+    driver_opts:
+      type: none
+      device: ./volumes/mono-database
+      o: bind
+
+  # ---------------------------------------------------------------------------------------------------- #
+  # Database (Multi) 'virtual' data volume
+  # This volume is used by the database service container to store its data, it allows the databases to be
+  # persisted between container restarts.
+  # This volume is 'virtual', it is created in Docker but it is not stored on the host machine.
+  # ---------------------------------------------------------------------------------------------------- #
+  db-data-multi-virtual:
+    driver: local
+
+  # ---------------------------------------------------------------------------------------------------- #
+  # Database (Multi) 'physical' data volume
+  # This volume is used by the database service container to store its data, it allows the databases to be
+  # persisted between container restarts.
+  # This volume is 'physical', it is created in Docker and it is stored on the host machine. That means that
+  # the data is persisted even if Docker is stopped or removed (same for the volume).
+  # ---------------------------------------------------------------------------------------------------- #
+  db-data-multi-physical:
+    driver: local
+    driver_opts:
+      type: none
+      device: ./volumes/multi-databases
+      o: bind
+
+services:
+  # ---------------------------------------------------------------------------------------------------- #
+  # Database service container (MySQL)
+  # ---------------------------------------------------------------------------------------------------- #
+  #
+  # The MySQL database service containers are based on the official MySQL Docker image.
+  # See: https://hub.docker.com/_/mysql
+  #
+  # ---------------------------------------------------------------------------------------------------- #
+  # Database service container (MySQL) - Mono
+  # This service container is started with only one database defined.
+  # ---------------------------------------------------------------------------------------------------- #
+  db-service-mysql-mono:
+    build:
+      context: ./
+      dockerfile: ./build/mono-database/Dockerfile
+      target: release
+      args:
+        - DB_ROOT_PASSWORD=${DB_MONO_ROOT_PASSWORD}
+    image: local-mysql:mono-database
+    container_name: dpt-mysql-mono
+    restart: unless-stopped
+    env_file:
+      - ./build/mono-database/env/.env
+    volumes:
+      # Use this volumes to keep the database data directly on the host machine.
+      # - db-data-mono-physical:/var/lib/mysql:rw
+      # Use this volumes to keep the database data in Docker only.
+      - db-data-mono-virtual:/var/lib/mysql:rw
+    ports:
+      - ${DB_MONO_PORT}:3306 # This port is used to access the database from the host machine with a client (e.g. MySQL Workbench, DBeaver).
+    networks:
+      - default
+
+  # ---------------------------------------------------------------------------------------------------- #
+  # Database service container (MySQL) - Multi
+  # This service container is started with multiple databases defined.
+  # ---------------------------------------------------------------------------------------------------- #
+  db-service-mysql-multi:
+    build:
+      context: ./
+      dockerfile: ./build/multi-databases/Dockerfile
+      target: release
+      args:
+        - DB_ROOT_PASSWORD=${DB_MULTI_ROOT_PASSWORD}
+    image: local-mysql:multi-database
+    container_name: dpt-mysql-multi
+    restart: unless-stopped
+    env_file:
+      - ./build/multi-databases/env/.env
+    volumes:
+      # Use this volumes to keep the database data directly on the host machine.
+      # - db-data-multi-physical:/var/lib/mysql:rw
+      # Use this volumes to keep the database data in Docker only.
+      - db-data-multi-virtual:/var/lib/mysql:rw
+    ports:
+      - ${DB_MULTI_PORT}:3306 # This port is used to access the database from the host machine with a client (e.g. MySQL Workbench, DBeaver).
+    networks:
+      - default
+
+# ---------------------------------------------------------------------------------------------------- #
+# Database service container (phpMyAdmin)
+# This service container is started with the phpMyAdmin tool to manage the databases from a web browser.
+# ---------------------------------------------------------------------------------------------------- #
+include:
+  - ./tools/pma-docker-compose.yml
