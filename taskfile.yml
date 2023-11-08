@@ -1,0 +1,15 @@
+version: "3"
+
+tasks:
+  default:
+    desc: Show this help message
+    cmds:
+      - task --list-all
+    silent: true
+
+  list-all-template-paths:
+    desc: List all template paths (Use a shell command)
+    aliases: [ltp]
+    cmds:
+      - find templates -name "taskfile.yml" -printf "%h\n" | sort -u
+    silent: true
