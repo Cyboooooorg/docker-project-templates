@@ -46,7 +46,7 @@ This repository provides templates for many languages and tools. However, it is 
 - [Databases](./templates/databases)
   - [MySQL](./templates/databases/mysql)
 - [Python](./templates/python)
-  - [Litestar Framework](./templates/python/litestar)
+  - [Native](./templates/python/native)
 - [More to come...](./templates)
 
 ### How to Use
