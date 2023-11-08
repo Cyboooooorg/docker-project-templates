@@ -6,11 +6,21 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
-- [...]
+### Work in progress
 
-## [0.1.0] - 2023-11-08
+- Python - Native Python Docker example
+
+---
+
+## [[0.1.0](https://github.com/Cyboooooorg/docker-project-templates/tree/v0.1.0)] - 2023-11-08
 
 ### Added
 
 - Database - MySQL Docker example added (Mono database example and Multi database example)
 - Taskfile - Added [Taskfile](https://taskfile.dev/) to the project
+
+## [[0.0.1](https://github.com/Cyboooooorg/docker-project-templates/tree/v0.0.1)] - 2023-06-11
+
+### Added
+
+- Project - Added project to the repository
