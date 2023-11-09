@@ -1,8 +1,0 @@
-version: "3"
-
-tasks:
-  default:
-    desc: Show this help message
-    cmds:
-      - task --list-all
-    silent: true
