@@ -1,0 +1,22 @@
+version: "3"
+
+includes:
+  docker:
+    taskfile: ./tasks/docker/docker-taskfile_{{OS}}.yml
+    aliases: [d]
+    vars:
+      CONTAINER_NAMES: "dpt-py-native-poetry"
+
+tasks:
+  default:
+    desc: Show this help message
+    cmds:
+      - task --list-all
+    silent: true
+
+  init:
+    desc: Create the env files if they don't exist
+    cmds:
+      - cp -n .env.example .env
+      - cp -n ./build/env/.env.example ./build/env/.env
+    silent: true

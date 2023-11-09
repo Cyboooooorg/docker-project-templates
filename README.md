@@ -46,20 +46,14 @@ This repository provides templates for many languages and tools. However, it is 
 - [Databases](./templates/databases)
   - [MySQL](./templates/databases/mysql)
 - [Python](./templates/python)
-  - [Litestar Framework](./templates/python/litestar)
+  - [Native](./templates/python/native)
 - [More to come...](./templates)
 
 ### How to Use
 
 To use these templates, you must first clone this repository. Then, you must copy the template you want to use to the root of your project. Finally, you must adapt the template to your project.
 
-Install [Task](https://taskfile.dev/installation/) and run the following command to see the available tasks:
-
-```bash
-task
-```
-
-Or go in any template folder and run the following command to see the available tasks:
+Install [Task](https://taskfile.dev/installation/) and run the following command to see the available tasks for global use, or you go in any template folder and run the following command to see the available tasks for this specific template:
 
 ```bash
 task

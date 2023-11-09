@@ -1,0 +1,27 @@
+version: '3.7'
+
+networks:
+  # ---------------------------------------------------------------------------------------------------- #
+  # Default network
+  # This network is created automatically by Docker.
+  # It is used by the service containers to communicate with each other.
+  # (It is defined here for documentation purposes only. See the Docker documentation for more details.)
+  # ---------------------------------------------------------------------------------------------------- #
+  default:
+    driver: bridge
+
+services:
+  # ---------------------------------------------------------------------------------------------------- #
+  # Application service container (Python)
+  # ---------------------------------------------------------------------------------------------------- #
+  app-service-py:
+    build:
+      context: ./
+      dockerfile: build/Dockerfile
+    image: dpt-py-native-pip:local-dev
+    container_name: dpt-py-native-pip
+    restart: unless-stopped
+    env_file:
+      - build/env/.env
+    networks:
+      - default

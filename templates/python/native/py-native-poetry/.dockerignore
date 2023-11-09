@@ -1,0 +1,9 @@
+# Ignore all git related files
+**/.git/**
+**/.gitignore
+**/.gitattributes
+**/.gitmodules
+**/.gitkeep
+
+# Ignore cache files
+**/__pycache__/**
