@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "dpt-py-native-poetry"
+version = "0.1.0"
+description = ""
+authors = ["Martin Crampon <martin.crampon@hotmail.fr>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+loguru = "^0.7.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
