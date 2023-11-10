@@ -14,6 +14,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          # Fetches all history for all tags and branches
+          fetch-depth: 0
       - name: Git Version
         uses: paulhatch/semantic-version@v5.3.0
         with:
@@ -32,4 +37,4 @@ jobs:
           version_format: "${major}.${minor}.${patch}"
           # Optional path to check for changes. If any changes are detected in the path the
           # 'changed' output will true. Enter multiple paths separated by spaces.
-          change_path: "src/my-service"
+          change_path: "./"
