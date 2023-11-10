@@ -1,0 +1,35 @@
+name: Versioning Project
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - dev
+      - release/*
+
+jobs:
+  versioning:
+    name: Versioning Project
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Git Version
+        uses: paulhatch/semantic-version@v5.3.0
+        with:
+          # The prefix to use to identify tags
+          tag_prefix: "v"
+          # A string which, if present in a git commit, indicates that a change represents a
+          # major (breaking) change, supports regular expressions wrapped with '/'
+          major_pattern: "(MAJOR)"
+          # A string which indicates the flags used by the `major_pattern` regular expression. Supported flags: idgs
+          major_regexp_flags: ""
+          # Same as above except indicating a minor change, supports regular expressions wrapped with '/'
+          minor_pattern: "(MINOR)"
+          # A string which indicates the flags used by the `minor_pattern` regular expression. Supported flags: idgs
+          minor_regexp_flags: ""
+          # A string to determine the format of the version output
+          version_format: "${major}.${minor}.${patch}"
+          # Optional path to check for changes. If any changes are detected in the path the
+          # 'changed' output will true. Enter multiple paths separated by spaces.
+          change_path: "src/my-service"
